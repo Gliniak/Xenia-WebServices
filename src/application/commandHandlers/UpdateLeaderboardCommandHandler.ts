@@ -1,7 +1,9 @@
 import { Inject } from '@nestjs/common';
 import { ICommandHandler, CommandHandler } from '@nestjs/cqrs';
 import Leaderboard from 'src/domain/aggregates/Leaderboard';
-import ILeaderboardRepository, { ILeaderboardRepositorySymbol } from 'src/domain/repositories/ILeaderboardRepository';
+import ILeaderboardRepository, {
+  ILeaderboardRepositorySymbol,
+} from 'src/domain/repositories/ILeaderboardRepository';
 import { UpdateLeaderboardCommand } from '../commands/UpdateLeaderboardCommand';
 
 @CommandHandler(UpdateLeaderboardCommand)

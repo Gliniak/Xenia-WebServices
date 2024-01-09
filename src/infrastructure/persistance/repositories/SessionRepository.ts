@@ -24,7 +24,7 @@ export default class SessionRepository implements ISessionRepository {
     private SessionModel: Model<SessionDocument>,
     private readonly sessionDomainMapper: SessionDomainMapper,
     private readonly sessionPersistanceMapper: SessionPersistanceMapper,
-  ) { }
+  ) {}
 
   public async save(session: Session) {
     await this.SessionModel.findOneAndUpdate(
@@ -53,17 +53,15 @@ export default class SessionRepository implements ISessionRepository {
 
   public async deleteSessions(sessions: Session[]) {
     if (sessions.length <= 0) {
-      console.log("Sessions already deleted.");
+      console.log('Sessions already deleted.');
       return;
     }
 
-    sessions.forEach(async session => {
-      const deleted_session = await this.SessionModel.findOneAndDelete(
-        {
-          id: session.id.value, 
-          titleId: session.titleId.toString(),
-        }
-      );
+    sessions.forEach(async (session) => {
+      const deleted_session = await this.SessionModel.findOneAndDelete({
+        id: session.id.value,
+        titleId: session.titleId.toString(),
+      });
 
       const qosPath = join(
         process.cwd(),
@@ -75,9 +73,11 @@ export default class SessionRepository implements ISessionRepository {
       // Delete QoS data for the session.
       if (existsSync(qosPath)) {
         await unlink(qosPath);
-      };
+      }
 
-      console.log(`Deleted Session: ${ deleted_session.id } from ${ deleted_session.hostAddress }`);
+      console.log(
+        `Deleted Session: ${deleted_session.id} from ${deleted_session.hostAddress}`,
+      );
     });
   }
 

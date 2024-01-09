@@ -63,8 +63,8 @@ export class TitleController {
       process.cwd(),
       'titles',
       titleId.toUpperCase(),
-      "services",
-      `${serviceId}.json`
+      'services',
+      `${serviceId}.json`,
     );
 
     if (!existsSync(path)) return [];

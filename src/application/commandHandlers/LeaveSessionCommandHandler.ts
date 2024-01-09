@@ -1,6 +1,8 @@
 import { Inject } from '@nestjs/common';
 import { ICommandHandler, CommandHandler } from '@nestjs/cqrs';
-import ISessionRepository, { ISessionRepositorySymbol } from 'src/domain/repositories/ISessionRepository';
+import ISessionRepository, {
+  ISessionRepositorySymbol,
+} from 'src/domain/repositories/ISessionRepository';
 import { LeaveSessionCommand } from '../commands/LeaveSessionCommand';
 
 @CommandHandler(LeaveSessionCommand)
@@ -13,7 +15,10 @@ export class LeaveSessionCommandHandler
   ) {}
 
   async execute(command: LeaveSessionCommand) {
-    const session = await this.repository.findSession(command.titleId, command.sessionId);
+    const session = await this.repository.findSession(
+      command.titleId,
+      command.sessionId,
+    );
 
     if (session == undefined) return;
 

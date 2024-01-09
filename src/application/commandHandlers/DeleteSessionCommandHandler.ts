@@ -4,8 +4,13 @@ import { existsSync } from 'fs';
 import { unlink } from 'fs/promises';
 import { join } from 'path';
 import Session from 'src/domain/aggregates/Session';
-import ISessionRepository, { ISessionRepositorySymbol } from 'src/domain/repositories/ISessionRepository';
-import { DeleteSessionCommand, DeleteSessionsCommand } from '../commands/DeleteSessionCommand';
+import ISessionRepository, {
+  ISessionRepositorySymbol,
+} from 'src/domain/repositories/ISessionRepository';
+import {
+  DeleteSessionCommand,
+  DeleteSessionsCommand,
+} from '../commands/DeleteSessionCommand';
 
 @CommandHandler(DeleteSessionCommand)
 export class DeleteSessionCommandHandler
@@ -14,7 +19,7 @@ export class DeleteSessionCommandHandler
   constructor(
     @Inject(ISessionRepositorySymbol)
     private repository: ISessionRepository,
-  ) { }
+  ) {}
 
   async execute(command: DeleteSessionCommand) {
     const session = await this.repository.findSession(
@@ -40,7 +45,7 @@ export class DeleteSessionCommandHandler
       if (existsSync(qosPath)) {
         await unlink(qosPath);
 
-        console.log(`Soft Deleted Session: ${ session.id.value }`);
+        console.log(`Soft Deleted Session: ${session.id.value}`);
       }
     }
   }
@@ -53,20 +58,20 @@ export class DeleteSessionsCommandHandler
   constructor(
     @Inject(ISessionRepositorySymbol)
     private repository: ISessionRepository,
-  ) { }
+  ) {}
 
   async execute(command: DeleteSessionsCommand) {
-    let msg = "Deleting all session(s) from " + command.hostAddress.value;
+    let msg = 'Deleting all session(s) from ' + command.hostAddress.value;
 
     if (command.macAddress) {
-      msg += " - " + command.macAddress.value.toString();
+      msg += ' - ' + command.macAddress.value.toString();
     }
 
     console.log(msg);
 
     const sessions = await this.repository.findSessionsByIPAndMac(
       command.hostAddress,
-      command.macAddress
+      command.macAddress,
     );
 
     await this.repository.deleteSessions(sessions);

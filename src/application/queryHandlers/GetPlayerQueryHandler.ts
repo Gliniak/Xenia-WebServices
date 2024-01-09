@@ -1,11 +1,12 @@
 import { Inject } from '@nestjs/common';
 import { QueryHandler, IQueryHandler } from '@nestjs/cqrs';
-import IPlayerRepository, { IPlayerRepositorySymbol } from 'src/domain/repositories/IPlayerRepository';
+import IPlayerRepository, {
+  IPlayerRepositorySymbol,
+} from 'src/domain/repositories/IPlayerRepository';
 import { GetPlayerQuery } from '../queries/GetPlayerQuery';
 
 @QueryHandler(GetPlayerQuery)
-export class GetPlayerQueryHandler implements IQueryHandler<GetPlayerQuery>
-{
+export class GetPlayerQueryHandler implements IQueryHandler<GetPlayerQuery> {
   constructor(
     @Inject(IPlayerRepositorySymbol)
     private repository: IPlayerRepository,

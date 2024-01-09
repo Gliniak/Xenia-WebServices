@@ -36,7 +36,11 @@ export default class LeaderboardRepository implements ILeaderboardRepository {
     );
   }
 
-  public async findLeaderboard(titleId: TitleId, id: LeaderboardId, player: Xuid) {
+  public async findLeaderboard(
+    titleId: TitleId,
+    id: LeaderboardId,
+    player: Xuid,
+  ) {
     const leaderboard = await this.LeaderboardModel.findOne({
       id: id.value,
       titleId: titleId.toString(),

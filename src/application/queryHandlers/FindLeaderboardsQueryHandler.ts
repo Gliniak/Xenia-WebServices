@@ -1,6 +1,8 @@
 import { Inject } from '@nestjs/common';
 import { QueryHandler, IQueryHandler } from '@nestjs/cqrs';
-import ILeaderboardRepository, { ILeaderboardRepositorySymbol } from 'src/domain/repositories/ILeaderboardRepository';
+import ILeaderboardRepository, {
+  ILeaderboardRepositorySymbol,
+} from 'src/domain/repositories/ILeaderboardRepository';
 import { FindLeaderboardsResponse } from 'src/infrastructure/presentation/responses/FindLeaderboardsResponse';
 import { FindLeaderboardsQuery } from '../queries/FindLeaderboardsQuery';
 
@@ -30,8 +32,9 @@ export class FindLeaderboardsQueryHandler
               leaderboardQuery.id,
               player,
             );
-            
-            const stats: FindLeaderboardsResponse[0]['players'][0]['stats'] = [];
+
+            const stats: FindLeaderboardsResponse[0]['players'][0]['stats'] =
+              [];
             const acceptedStatIds = leaderboardQuery.statisticIds.map(
               (stat) => stat.value,
             );
@@ -53,15 +56,17 @@ export class FindLeaderboardsQueryHandler
             }
 
             // add missing stats as null.
-            const missingStatIds = acceptedStatIds.filter(acceptedStatId => !foundStatIds.includes(acceptedStatId));
-            
-            missingStatIds.forEach(missingStatId => {
+            const missingStatIds = acceptedStatIds.filter(
+              (acceptedStatId) => !foundStatIds.includes(acceptedStatId),
+            );
+
+            missingStatIds.forEach((missingStatId) => {
               stats.push({
                 id: parseInt(missingStatId),
                 type: 255,
                 value: 0,
-              })
-            })
+              });
+            });
 
             leaderboardResponse.players.push({
               xuid: player.value,

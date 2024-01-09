@@ -1,6 +1,8 @@
 import { Inject } from '@nestjs/common';
 import { ICommandHandler, CommandHandler } from '@nestjs/cqrs';
-import ISessionRepository, { ISessionRepositorySymbol } from 'src/domain/repositories/ISessionRepository';
+import ISessionRepository, {
+  ISessionRepositorySymbol,
+} from 'src/domain/repositories/ISessionRepository';
 import { ModifySessionCommand } from '../commands/ModifySessionCommand';
 
 @CommandHandler(ModifySessionCommand)
@@ -14,7 +16,10 @@ export class ModifySessionCommandHandler
 
   async execute(command: ModifySessionCommand) {
     console.log(command);
-    const session = await this.repository.findSession(command.titleId, command.sessionId);
+    const session = await this.repository.findSession(
+      command.titleId,
+      command.sessionId,
+    );
 
     session.modify({
       flags: command.flags,

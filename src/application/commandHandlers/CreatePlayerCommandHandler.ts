@@ -3,8 +3,13 @@ import { ICommandHandler, CommandHandler } from '@nestjs/cqrs';
 import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 import Player from 'src/domain/aggregates/Player';
-import IPlayerRepository, { IPlayerRepositorySymbol } from 'src/domain/repositories/IPlayerRepository';
-import { Session, SessionDocument } from 'src/infrastructure/persistance/models/SessionSchema';
+import IPlayerRepository, {
+  IPlayerRepositorySymbol,
+} from 'src/domain/repositories/IPlayerRepository';
+import {
+  Session,
+  SessionDocument,
+} from 'src/infrastructure/persistance/models/SessionSchema';
 import { CreatePlayerCommand } from '../commands/CreatePlayerCommand';
 
 @CommandHandler(CreatePlayerCommand)

@@ -1,4 +1,4 @@
 export interface LeaderboardStat {
-    type: number;
-    value: number;
+  type: number;
+  value: number;
 }

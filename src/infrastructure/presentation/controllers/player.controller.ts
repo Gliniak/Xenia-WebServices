@@ -37,9 +37,7 @@ export class PlayerController {
   ) {}
 
   @Post()
-  async createPlayer(
-    @Body() request: CreatePlayerRequest,
-  ) {
+  async createPlayer(@Body() request: CreatePlayerRequest) {
     await this.commandBus.execute(
       new CreatePlayerCommand(
         new Xuid(request.xuid),
@@ -53,16 +51,13 @@ export class PlayerController {
   @Post('/find')
   async findPlayer(
     @Body() request: FindPlayerRequest,
-  ) : Promise<PlayerResponse> {
+  ): Promise<PlayerResponse> {
     console.log(request);
     const player = await this.queryBus.execute(
-      new FindPlayerQuery(
-        new IpAddress(request.hostAddress),
-      ),
+      new FindPlayerQuery(new IpAddress(request.hostAddress)),
     );
 
-    if (!player)
-        throw new NotFoundException('player not found')
+    if (!player) throw new NotFoundException('player not found');
 
     return {
       xuid: player.xuid.value,
@@ -71,6 +66,6 @@ export class PlayerController {
       port: player.port,
       macAddress: player.macAddress.value,
       sessionId: player.sessionId ? player.sessionId.value : '0000000000000000',
-    }
+    };
   }
 }

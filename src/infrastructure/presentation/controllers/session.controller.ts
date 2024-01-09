@@ -15,7 +15,14 @@ import ILogger, { ILoggerSymbol } from '../../../ILogger';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { ApiParam, ApiTags } from '@nestjs/swagger';
 import TitleId from 'src/domain/value-objects/TitleId';
-import { Body, Post, Req, Res, UploadedFile, UseInterceptors } from '@nestjs/common/decorators';
+import {
+  Body,
+  Post,
+  Req,
+  Res,
+  UploadedFile,
+  UseInterceptors,
+} from '@nestjs/common/decorators';
 import { CreateSessionRequest } from '../requests/CreateSessionRequest';
 import { CreateSessionCommand } from 'src/application/commands/CreateSessionCommand';
 import SessionId from 'src/domain/value-objects/SessionId';
@@ -53,7 +60,9 @@ import LeaderboardId from 'src/domain/value-objects/LeaderboardId';
 import { WriteStatsRequest } from '../requests/WriteStatsRequest';
 import LeaderboardStatId from 'src/domain/value-objects/LeaderboardStatId';
 import PropertyId from 'src/domain/value-objects/PropertyId';
-import Leaderboard, { LeaderboardUpdateProps } from 'src/domain/aggregates/Leaderboard';
+import Leaderboard, {
+  LeaderboardUpdateProps,
+} from 'src/domain/aggregates/Leaderboard';
 import { FindPlayerSessionQuery } from 'src/application/queries/FindPlayerSessionQuery';
 import axios from 'axios';
 import { MigrateSessionCommand } from 'src/application/commands/MigrateSessionCommand';
@@ -96,24 +105,31 @@ export class SessionController {
       );
 
       if (flags.value == Flags.STATS) {
-        console.log("Updating Stats.")
+        console.log('Updating Stats.');
       }
-  
+
       if (flags.value == Flags.STATS + Flags.HOST) {
-        console.log("Updating Stats.")
+        console.log('Updating Stats.');
       }
-      
+
       try {
-        const player = await this.queryBus.execute(new FindPlayerQuery(new IpAddress(request.hostAddress)));
-        await this.commandBus.execute(new SetPlayerSessionIdCommand(player.xuid, new SessionId(request.sessionId)));
+        const player = await this.queryBus.execute(
+          new FindPlayerQuery(new IpAddress(request.hostAddress)),
+        );
+        await this.commandBus.execute(
+          new SetPlayerSessionIdCommand(
+            player.xuid,
+            new SessionId(request.sessionId),
+          ),
+        );
       } catch (error) {
-        console.log("BAD PLAYER " + request.hostAddress);
+        console.log('BAD PLAYER ' + request.hostAddress);
         console.log(session);
       }
     } else {
       console.log('Peer joining session ' + request.sessionId);
 
-      var sessionQuery = new GetSessionQuery(
+      const sessionQuery = new GetSessionQuery(
         new TitleId(titleId),
         new SessionId(request.sessionId),
       );
@@ -186,20 +202,24 @@ export class SessionController {
     const splitIp = ip.split(':');
     let ipv4 = splitIp[splitIp.length - 1];
 
-    if (ipv4 == "127.0.0.1" || ipv4.startsWith("192.168") || ipv4.split(".")[0] == "10") {
+    if (
+      ipv4 == '127.0.0.1' ||
+      ipv4.startsWith('192.168') ||
+      ipv4.split('.')[0] == '10'
+    ) {
       // Hi me! Who are you?
-      const res = await axios.get("https://api.ipify.org/");
+      const res = await axios.get('https://api.ipify.org/');
       ipv4 = res.data;
     }
 
     if (session) {
-      console.log("Host Address: " + session.hostAddress.value);
-      console.log("IPV4 Address: " + ipv4);
+      console.log('Host Address: ' + session.hostAddress.value);
+      console.log('IPV4 Address: ' + ipv4);
     } else {
-      console.log("Session already deleted? " + ipv4);
+      console.log('Session already deleted? ' + ipv4);
       console.log(session);
     }
-    
+
     if (session == undefined || session.hostAddress.value !== ipv4) return;
 
     await this.commandBus.execute(
@@ -259,16 +279,17 @@ export class SessionController {
     const players: Player[] = await Promise.all(
       session.players.map((xuid) => {
         return this.queryBus.execute(new GetPlayerQuery(xuid));
-      }
-    ));
+      }),
+    );
 
     const machinePlayers = {};
-    players.filter((player) => player != undefined).forEach((player) => {
-      if (machinePlayers[player.machineId.value] !== undefined)
-        machinePlayers[player.machineId.value].push(player);
-      else
-        machinePlayers[player.machineId.value] = [player];
-    });
+    players
+      .filter((player) => player != undefined)
+      .forEach((player) => {
+        if (machinePlayers[player.machineId.value] !== undefined)
+          machinePlayers[player.machineId.value].push(player);
+        else machinePlayers[player.machineId.value] = [player];
+      });
 
     const machines: SessionArbitrationResponse['machines'] = [];
 
@@ -276,7 +297,7 @@ export class SessionController {
       machines.push({
         id: key,
         players: (value as Player[]).map((player: Player) => {
-          return { xuid: player.xuid.value }
+          return { xuid: player.xuid.value };
         }),
       });
     }
@@ -285,8 +306,8 @@ export class SessionController {
       totalPlayers: players.length,
       machines,
     };
-  }  
-  
+  }
+
   @Post('/:sessionId/modify')
   @ApiParam({ name: 'titleId', example: '4D5307E6' })
   @ApiParam({ name: 'sessionId', example: 'B36B3FE8467CFAC7' })
@@ -368,10 +389,10 @@ export class SessionController {
     const qosPath = join(process.cwd(), 'qos', titleId, sessionId);
 
     if (existsSync(qosPath)) {
-      console.log("Updating QoS Data.");
+      console.log('Updating QoS Data.');
     } else {
       await mkdir(join(process.cwd(), 'qos', titleId), { recursive: true });
-      console.log("Saving QoS Data.");
+      console.log('Saving QoS Data.');
     }
 
     // always write QoS data to ensure data is updated.
@@ -414,7 +435,7 @@ export class SessionController {
       new AddSessionContextCommand(
         new TitleId(titleId),
         new SessionId(sessionId),
-        request.contexts
+        request.contexts,
       ),
     );
   }
@@ -447,7 +468,7 @@ export class SessionController {
     @Param('sessionId') sessionId: string,
     @Body() request: WriteStatsRequest,
   ) {
-    console.log({request: JSON.stringify(request)})
+    console.log({ request: JSON.stringify(request) });
 
     const statsConfigPath = join(
       process.cwd(),

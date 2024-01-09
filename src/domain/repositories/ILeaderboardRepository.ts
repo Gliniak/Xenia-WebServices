@@ -4,7 +4,11 @@ import TitleId from '../value-objects/TitleId';
 import Xuid from '../value-objects/Xuid';
 
 export default interface ILeaderboardRepository {
-  findLeaderboard: (titleId: TitleId, id: LeaderboardId, player: Xuid) => Promise<Leaderboard | undefined>;
+  findLeaderboard: (
+    titleId: TitleId,
+    id: LeaderboardId,
+    player: Xuid,
+  ) => Promise<Leaderboard | undefined>;
   save: (leaderboard: Leaderboard) => Promise<void>;
 }
 

@@ -7,5 +7,5 @@ export default class Xuid extends TinyTypeOf<string>() {
     }
 
     super(value.toUpperCase());
-  };
+  }
 }

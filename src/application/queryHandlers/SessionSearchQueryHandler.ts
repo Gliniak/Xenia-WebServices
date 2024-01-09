@@ -1,6 +1,8 @@
 import { Inject } from '@nestjs/common';
 import { QueryHandler, IQueryHandler } from '@nestjs/cqrs';
-import ISessionRepository, { ISessionRepositorySymbol } from 'src/domain/repositories/ISessionRepository';
+import ISessionRepository, {
+  ISessionRepositorySymbol,
+} from 'src/domain/repositories/ISessionRepository';
 import { SessionSearchQuery } from '../queries/SessionSearchQuery';
 
 @QueryHandler(SessionSearchQuery)
@@ -14,6 +16,9 @@ export class SessionSearchQueryHandler
 
   async execute(query: SessionSearchQuery) {
     console.log('Session Search ' + query.searchIndex);
-    return this.repository.findAdvertisedSessions(query.title, query.resultsCount);
+    return this.repository.findAdvertisedSessions(
+      query.title,
+      query.resultsCount,
+    );
   }
 }

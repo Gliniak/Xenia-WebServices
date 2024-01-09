@@ -1,12 +1,18 @@
 import { Module } from '@nestjs/common';
 import { CqrsModule } from '@nestjs/cqrs';
 import { MongooseModule } from '@nestjs/mongoose';
-import { Session, SessionSchema } from 'src/infrastructure/persistance/models/SessionSchema';
+import {
+  Session,
+  SessionSchema,
+} from 'src/infrastructure/persistance/models/SessionSchema';
 import { PersistanceModule } from 'src/infrastructure/persistance/persistance.module';
 import { CreatePlayerCommandHandler } from './commandHandlers/CreatePlayerCommandHandler';
 import { CreateSessionCommandHandler } from './commandHandlers/CreateSessionCommandHandler';
 import { AddSessionContextCommandHandler } from './commandHandlers/AddSessionContextCommandHandler';
-import { DeleteSessionCommandHandler, DeleteSessionsCommandHandler } from './commandHandlers/DeleteSessionCommandHandler';
+import {
+  DeleteSessionCommandHandler,
+  DeleteSessionsCommandHandler,
+} from './commandHandlers/DeleteSessionCommandHandler';
 import { JoinSessionCommandHandler } from './commandHandlers/JoinSessionCommandHandler';
 import { LeaveSessionCommandHandler } from './commandHandlers/LeaveSessionCommandHandler';
 import { MigrateSessionCommandHandler } from './commandHandlers/MigrateSessionCommandHandler';
@@ -51,4 +57,4 @@ export const commandHandlers = [
   ],
   providers: [...queryHandlers, ...commandHandlers],
 })
-export class ApplicationModule { }
+export class ApplicationModule {}

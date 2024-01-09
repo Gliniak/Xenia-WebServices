@@ -1,9 +1,9 @@
 export interface SessionArbitrationResponse {
-    totalPlayers: number,
-    machines: {
-        id: string;
-        players: {
-            xuid: string;
-        }[]
-    }[]
+  totalPlayers: number;
+  machines: {
+    id: string;
+    players: {
+      xuid: string;
+    }[];
+  }[];
 }

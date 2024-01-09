@@ -1,7 +1,9 @@
 import { Inject } from '@nestjs/common';
 import { ICommandHandler, CommandHandler } from '@nestjs/cqrs';
 import Session from 'src/domain/aggregates/Session';
-import ISessionRepository, { ISessionRepositorySymbol } from 'src/domain/repositories/ISessionRepository';
+import ISessionRepository, {
+  ISessionRepositorySymbol,
+} from 'src/domain/repositories/ISessionRepository';
 import { CreateSessionCommand } from '../commands/CreateSessionCommand';
 
 @CommandHandler(CreateSessionCommand)

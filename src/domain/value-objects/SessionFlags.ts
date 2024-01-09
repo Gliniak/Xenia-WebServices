@@ -11,7 +11,7 @@ export const Flags = {
   INVITES_DISABLED: 0x0100,
   JOIN_VIA_PRESENCE_DISABLED: 0x0200,
   JOIN_IN_PROGRESS_DISABLED: 0x0400,
-  JOIN_VIA_PRESENCE_FRIENDS_ONLY: 0x0800
+  JOIN_VIA_PRESENCE_FRIENDS_ONLY: 0x0800,
 };
 
 export default class SessionFlags extends TinyTypeOf<number>() {
@@ -32,7 +32,7 @@ export default class SessionFlags extends TinyTypeOf<number>() {
 
     // TODO: Implement
     // There should be some modification here, but I'm unsure which flags are modified.
-    console.warn("Session flag modification is not implemented!");
+    console.warn('Session flag modification is not implemented!');
 
     return new SessionFlags(this.value);
   }

@@ -1,6 +1,8 @@
 import { Inject } from '@nestjs/common';
 import { ICommandHandler, CommandHandler } from '@nestjs/cqrs';
-import ISessionRepository, { ISessionRepositorySymbol } from 'src/domain/repositories/ISessionRepository';
+import ISessionRepository, {
+  ISessionRepositorySymbol,
+} from 'src/domain/repositories/ISessionRepository';
 import { JoinSessionCommand } from '../commands/JoinSessionCommand';
 
 @CommandHandler(JoinSessionCommand)
@@ -13,7 +15,10 @@ export class JoinSessionCommandHandler
   ) {}
 
   async execute(command: JoinSessionCommand) {
-    const session = await this.repository.findSession(command.titleId, command.sessionId);
+    const session = await this.repository.findSession(
+      command.titleId,
+      command.sessionId,
+    );
 
     session.join({
       xuids: command.xuids,

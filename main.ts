@@ -11,7 +11,7 @@ async function bootstrap() {
     rawBody: true,
   });
 
-  if(new PersistanceSettings().get().swagger_API == "true") {
+  if (new PersistanceSettings().get().swagger_API == 'true') {
     const config = new DocumentBuilder()
       .setTitle('Xenia Web API')
       .setDescription('')
@@ -25,10 +25,10 @@ async function bootstrap() {
   app.use(requestIp.mw());
 
   // Support Heroku
-  const PORT = process.env.PORT || new PresentationSettings().get().port
+  const PORT = process.env.PORT || new PresentationSettings().get().port;
 
   await app.listen(PORT, () => {
-      console.log("Listening on port: " + PORT);
+    console.log('Listening on port: ' + PORT);
   });
 }
 bootstrap();

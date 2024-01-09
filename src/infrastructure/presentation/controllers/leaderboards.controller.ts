@@ -1,9 +1,4 @@
-import {
-  Controller,
-  Inject,
-  Post,
-  Body,
-} from '@nestjs/common';
+import { Controller, Inject, Post, Body } from '@nestjs/common';
 import ILogger, { ILoggerSymbol } from '../../../ILogger';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { ApiTags } from '@nestjs/swagger';

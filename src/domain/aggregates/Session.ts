@@ -4,7 +4,7 @@ import SessionFlags from '../value-objects/SessionFlags';
 import SessionId from '../value-objects/SessionId';
 import TitleId from '../value-objects/TitleId';
 import Xuid from '../value-objects/Xuid';
-import * as crypto from "crypto";
+import * as crypto from 'crypto';
 
 interface SessionProps {
   id: SessionId;
@@ -46,7 +46,7 @@ interface CreateMigrationProps {
 }
 
 interface ContextProps {
-  context: Map<number, {contextId: number, value: number}>;
+  context: Map<number, { contextId: number; value: number }>;
 }
 
 interface JoinProps {
@@ -75,8 +75,8 @@ export default class Session {
 
   static randomSessionId() {
     const bytesHex = crypto
-    .randomBytes(8)
-    .reduce((o, v) => o + ('00' + v.toString(16)).slice(-2), '');
+      .randomBytes(8)
+      .reduce((o, v) => o + ('00' + v.toString(16)).slice(-2), '');
 
     return bytesHex;
   }
@@ -99,7 +99,7 @@ export default class Session {
   public addContext(props: ContextProps) {
     props.context.forEach((entry) => {
       this.props.context.set(entry.contextId.toString(16), entry.value);
-    })
+    });
   }
 
   public modify(props: ModifyProps) {
@@ -118,7 +118,9 @@ export default class Session {
 
   public leave(props: LeaveProps) {
     const xuidValues = props.xuids.map((xuid) => xuid.value);
-    this.props.players = this.props.players.filter((player) => !xuidValues.includes(player.value));
+    this.props.players = this.props.players.filter(
+      (player) => !xuidValues.includes(player.value),
+    );
   }
 
   public delete() {

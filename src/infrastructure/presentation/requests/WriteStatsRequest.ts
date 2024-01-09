@@ -1,4 +1,4 @@
-import { ApiProperty } from "@nestjs/swagger";
+import { ApiProperty } from '@nestjs/swagger';
 
 class WriteStatsRequestLeaderboardStatistic {
   @ApiProperty()
@@ -10,8 +10,8 @@ class WriteStatsRequestLeaderboardStatistic {
 class WriteStatsRequestLeaderboard {
   @ApiProperty()
   stats: {
-    [propertyId: string]: WriteStatsRequestLeaderboardStatistic
-  }
+    [propertyId: string]: WriteStatsRequestLeaderboardStatistic;
+  };
 }
 
 export class WriteStatsRequest {
@@ -19,7 +19,6 @@ export class WriteStatsRequest {
   xuid: string;
   @ApiProperty()
   leaderboards: {
-    [leaderboardId: string]: WriteStatsRequestLeaderboard
-  }
+    [leaderboardId: string]: WriteStatsRequestLeaderboard;
+  };
 }
-

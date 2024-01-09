@@ -1,7 +1,9 @@
 import { Inject } from '@nestjs/common';
 import { ICommandHandler, CommandHandler } from '@nestjs/cqrs';
 import Player from 'src/domain/aggregates/Player';
-import IPlayerRepository, { IPlayerRepositorySymbol } from 'src/domain/repositories/IPlayerRepository';
+import IPlayerRepository, {
+  IPlayerRepositorySymbol,
+} from 'src/domain/repositories/IPlayerRepository';
 import { SetPlayerSessionIdCommand } from '../commands/SetPlayerSessionIdCommand';
 
 @CommandHandler(SetPlayerSessionIdCommand)
