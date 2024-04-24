@@ -21,6 +21,7 @@ export default class SessionPersistanceMapper {
       players: session.players.map((xuid) => xuid.value),
       deleted: session.deleted,
       context: session.context,
+      properties: session.properties,
       migration: session.migration ? session.migration.value : undefined,
       updatedAt,
     };
